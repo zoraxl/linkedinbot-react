@@ -1,5 +1,6 @@
 import Versions from './components/Versions'
 import electronLogo from './assets/electron.svg'
+import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react'
 
 function App(): JSX.Element {
   const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
@@ -9,7 +10,15 @@ function App(): JSX.Element {
       <img alt="logo" className="logo" src={electronLogo} />
       <div className="creator">Powered by electron-vite</div>
       <div>login</div>
-      <div></div>
+      <div>
+        {' '}
+        <SignedOut>
+          <SignInButton />
+        </SignedOut>
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
+      </div>
       <div className="text">
         Build an Electron app with <span className="react">React</span>
         &nbsp;and <span className="ts">TypeScript</span>
