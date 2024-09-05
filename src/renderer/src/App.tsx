@@ -13,7 +13,7 @@ function App(): JSX.Element {
       <div>
         {' '}
         <SignedOut>
-          <SignInButton />
+          <SignInButton fallbackRedirectUrl="/" />
         </SignedOut>
         <SignedIn>
           <UserButton />
