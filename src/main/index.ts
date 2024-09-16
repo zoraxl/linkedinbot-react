@@ -2,7 +2,8 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-
+const { exec } = require('child_process')
+const path = require('path')
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -51,6 +52,28 @@ app.whenReady().then(() => {
 
   // IPC test
   ipcMain.on('ping', () => console.log('pong'))
+  // Listen for events from the renderer process
+  ipcMain.on('trigger-python', (event) => {
+    // Path to your Python executable (make sure the path is correct)
+    // const pythonExecutablePath = path.join(__dirname, 'python/dist', 'script')
+    const pythonExecutablePath = path.join(__dirname, '../../resources/scripts/script')
+    console.log(pythonExecutablePath)
+    // Execute the Python script
+    exec(`${pythonExecutablePath}`, (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Error: ${error.message}`)
+        event.reply('python-result', `Error: ${error.message}`)
+        return
+      }
+      if (stderr) {
+        console.error(`Standard Error: ${stderr}`)
+        event.reply('python-result', `Standard Error: ${stderr}`)
+        return
+      }
+      console.log(`Python Output: ${stdout}`)
+      event.reply('python-result', stdout) // Send result back to renderer
+    })
+  })
 
   createWindow()
 

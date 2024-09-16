@@ -1,0 +1,17 @@
+[project]
+name = "linkedinbot"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "]", email = "53531227+zoraxl@users.noreply.github.com"},
+]
+dependencies = [
+    "pyinstaller>=6.10.0",
+]
+requires-python = "==3.11.*"
+readme = "README.md"
+license = {text = "MIT"}
+
+
+[tool.pdm]
+distribution = false
